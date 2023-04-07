@@ -1,0 +1,29 @@
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="position: relative; display: inline-block;">
+        <div style="position: absolute; bottom: 0; display: flex; width: 100%; align-items: center; padding: 10px;">
+            <!-- 1st Place -->
+            <div id="1stPlace" style="background-color: gold; height: 35px; width: 100%"></div>
+            <!-- 2nd Place -->
+            <div id="2ndPlace" style="background-color: silver; height: 35px; width: 100%"></div>
+            <!-- timer -->
+            <div id="timer" style="background-color: red; height: 50px; width: 100px; flex-shrink: 0;
+             display: flex; align-items: center; justify-content: center;">0.00</div>
+            
+            <!-- 3rd Place -->
+            <div id="3rdPlace" style="background-color: brown; height: 35px; width: 100%"></div>
+            <!-- 4th Place -->
+            <div id="4thPlace" style="background-color: darkcyan; height: 35px; width: 100%"></div>
+        </div>
+        <canvas></canvas>
+    </div>
+
+    <script src="index.js"></script>
+</body>
