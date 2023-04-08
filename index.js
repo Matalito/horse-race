@@ -4,17 +4,17 @@ const c = canvas.getContext('2d');
 canvas.width = 1024
 canvas.height = 576
 function initialDraw() {
-c.fillStyle = 'green'
-c.fillRect(0, 0, canvas.width, canvas.height - 70)
-c.fillStyle = 'black'
-c.fillRect(0, canvas.height - 70, canvas.width, canvas.height)
-c.fillStyle = 'brown'
-c.fillRect(0, 9, canvas.width, 27)
-c.fillRect(0, 49, canvas.width, 27)
-c.fillRect(0, 89, canvas.width, 27)
-c.fillRect(0, 129, canvas.width, 27)
-c.fillStyle = 'white'
-c.fillRect(975, 0, 12, canvas.height - 70)
+    c.fillStyle = 'green'
+    c.fillRect(0, 0, canvas.width, canvas.height - 70)
+    c.fillStyle = 'black'
+    c.fillRect(0, canvas.height - 70, canvas.width, canvas.height)
+    c.fillStyle = 'brown'
+    c.fillRect(0, 9, canvas.width, 27)
+    c.fillRect(0, 49, canvas.width, 27)
+    c.fillRect(0, 89, canvas.width, 27)
+    c.fillRect(0, 129, canvas.width, 27)
+    c.fillStyle = 'white'
+    c.fillRect(975, 0, 12, canvas.height - 70)
 }
 initialDraw()
 
@@ -36,7 +36,7 @@ class Sprite {
         this.draw()
         if (this.position.x + this.width >= canvas.width) {
             this.velocity.x = 0
-        } else this.position.x += this.velocity.x + Math.random()
+        } else this.position.x += this.velocity.x/* + Math.random()*/
     }
 }
 
@@ -46,7 +46,7 @@ const horse1 = new Sprite({
         y: 10
     },
     velocity: {
-        x: 3 + Math.random() / 6,
+        x: 3/* + Math.random() / 6*/,
         y: 0
     },
     color: 'yellow'
@@ -58,7 +58,7 @@ const horse2 = new Sprite({
         y: 50
     },
     velocity: {
-        x: 3 + Math.random() / 6,
+        x: 3/* + Math.random() / 6*/,
         y: 0
     },
     color: 'red'
@@ -70,7 +70,7 @@ const horse3 = new Sprite({
         y: 90
     },
     velocity: {
-        x: 3 + Math.random() / 6,
+        x: 3/* + Math.random() / 6*/,
         y: 0
     },
     color: 'blue'
@@ -82,7 +82,7 @@ const horse4 = new Sprite({
         y: 130
     },
     velocity: {
-        x: 3 + Math.random() / 6,
+        x: 3/* + Math.random() / 6*/,
         y: 0
     },
     color: 'black'
@@ -198,7 +198,7 @@ function race() {
     }
 }*/
 
-
+/*
 //runs the race. accounts for any and all ties. needs to be expanded with any increase in horses.
 function race() {
     let crossFinCheck = crossFin.length
@@ -224,8 +224,36 @@ function race() {
             }          
         }
     }
-}
+}*/
 
+//IT WORKS, IT WORKS. Corrected the placement of the internal loop and now it will account for any amount of ties between any amount of horses.
+function race() {
+    let crossFinCheck = crossFin.length
+    raceRunning = true
+    window.requestAnimationFrame(race)
+    initialDraw()
+    horse1.update()
+    horse2.update()
+    horse3.update()
+    horse4.update()
+    for (let i = 0; i < horses.length; i++) {
+        if (crossFin.includes(horses[i].color) === false && horses[i].position.x + horses[i].width > 975) {
+            crossFin.push(horses[i].color);
+            finTime.push(timer.toFixed(3));
+            if (crossFinCheck !== crossFin.length) {
+                if (finTime[crossFin.length - 1] !== finTime[crossFin.length - 2]) {
+                    console.log(horses[i].color + ' finished in ' + finPlace[crossFin.indexOf(horses[i].color)] + ' at ' + timer.toFixed(3) + '!');
+                } else {
+                    for (let j = 0; j < crossFin.length; j++) {
+                        if (finTime[crossFin.length - 1] !== finTime[crossFin.length - j - 2]) {
+                            console.log(horses[i].color + ' finished tied for ' + finPlace[crossFin.indexOf(horses[i].color) - j] + ' at ' + timer.toFixed(3) + '!');
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 
 //currently useless and non-functional attempt to reset the race without needing to refresh.
