@@ -41,7 +41,7 @@ class Runner {
 
 let raceRunning = false;
 const horses = [];
-const colors = ['aqua', 'black', 'blue', 'fuchsia', 'gray', 'green', 'lime', 'maroon', 'navy', 'olive', 'purple', 'red', 'silver', 'teal', 'white', 'yellow'];
+const colors = ['Aqua', 'Black', 'Blue', 'Fuchsia', 'Gray', 'Green', 'Lime', 'Maroon', 'Navy', 'Olive', 'Purple', 'Red', 'Silver', 'Teal', 'White', 'Yellow'];
 const finPlace = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th'];
 const crossFin = [];
 const finTime = [];
@@ -97,6 +97,10 @@ function race() {
                 if (finTime[crossFin.length - 1] !== finTime[crossFin.length - 2]) {
                     console.log(horses[i].color + ' finished in ' + finPlace[crossFin.indexOf(horses[i].color)] + ' at ' + timer.toFixed(3) + '!');
                     finished.push(finPlace[crossFin.indexOf(horses[i].color)]);
+                    document.querySelector('#FirstPlace').innerHTML = `${finished[0]}: ${crossFin[0]} ${finTime[0]}`
+                    document.querySelector('#SecondPlace').innerHTML = `${finished[1]}: ${crossFin[1]} ${finTime[1]}`
+                    document.querySelector('#ThirdPlace').innerHTML = `${finished[2]}: ${crossFin[2]} ${finTime[2]}`
+                    document.querySelector('#FourthPlace').innerHTML = `${finished[3]}: ${crossFin[3]} ${finTime[3]}`
                 } else {
                     for (let j = 1; finished.length !== crossFin.length; j++) {
                         if (finTime[crossFin.length - 1] !== finTime[crossFin.length - j - 2]) {
