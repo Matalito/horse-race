@@ -87,13 +87,21 @@ function initHorses() {
 initHorses();
 
 //defines and runs a timer on screen during the race.
-let timer = 0.00
+let timer = 0.000
+let startTime = '';
 function increaseTimer() {
     if (crossFin.length < horses.length) {
-        setTimeout(increaseTimer, 5)
-        timer = timer + 1 / 200;
-        document.querySelector('#timer').innerHTML = timer.toFixed(3);
-    }
+    if (raceRunning === true) {
+        if (!startTime) {
+            startTime = new Date();
+            setTimeout(increaseTimer, 5)
+        } else {
+            let currentTime = new Date();
+            timer = (currentTime - startTime) / 1000;
+            setTimeout(increaseTimer, 5)
+            document.querySelector('#timer').innerHTML = timer.toFixed(3);
+        }
+    }}
 }
 
 //moves the horses.
@@ -109,31 +117,37 @@ function checkPosition() {
         currentPos.push(horses[i])
     }
     currentPos.sort((firstItem, secondItem) => secondItem.position.x - firstItem.position.x);
-    //console.log(currentPos);
-    //console.log(currentPos[0].color + ' ' + finPlace[0])
     for (let i = 1; i < horses.length; i++) {
         if (currentPos[i].position.x !== currentPos[i - 1].position.x) {
-            //console.log(currentPos[i].color + ' ' + finPlace[i])
         } else {
             for (let j = 1; horses.length; j++) {
                 if (currentPos[i].position.x !== currentPos[i - j].position.x) {
-                    //console.log(currentPos[i].color + ' ' + finPlace[i - j])
                 }
             }
         }
     }
 }
 
-
-function displayPos() {
+//generate position boxes to report the live position of the horses.
+function posBox() {
     for (let i = 0; i < horses.length; i++) {
-        if (horses[i].position.x < canvas.width - 50) {
+        if (!document.querySelector('#posDiv' + i)) {
             const posDiv = document.createElement('div');
             posDiv.id = 'posDiv' + i;
             posDiv.className = 'currentPos';
-        }
+            posDiv.style.left = horses[i].position.x + horses[i].width;
+            posDiv.style.top = horses[i].position.y;
+            document.body.insertBefore(posDiv, document.getElementById('#posBar'))
+        } 
     }
 }
+
+//displays the live posotions in the position boxes.
+function displayPos() {
+    for (let i = 0; i < horses.length; i++) {
+        document.querySelector('#posDiv' + i).innerHTML = finPlace[currentPos.indexOf(horses[i])];
+    }
+} 
 
 //Logs positions at the 1/4 mark.
 function checkQuarter() {
@@ -185,10 +199,10 @@ function checkFinish() {
                 if (finTime[crossFin.length - 1] !== finTime[crossFin.length - 2]) {
                     console.log(horses[i].color + ' finished in ' + finPlace[crossFin.indexOf(horses[i].color)] + ' at ' + timer.toFixed(3) + '!');
                     finished.push(finPlace[crossFin.indexOf(horses[i].color)]);
-                    document.querySelector('#FirstPlace').innerHTML = `${finished[0]}: ${crossFin[0]} ${finTime[0]}`
-                    document.querySelector('#SecondPlace').innerHTML = `${finished[1]}: ${crossFin[1]} ${finTime[1]}`
-                    document.querySelector('#ThirdPlace').innerHTML = `${finished[2]}: ${crossFin[2]} ${finTime[2]}`
-                    document.querySelector('#FourthPlace').innerHTML = `${finished[3]}: ${crossFin[3]} ${finTime[3]}`
+                    document.querySelector('#FirstPlace').innerHTML = `${finished[0]}: ${crossFin[0]} ${finTime[0]}`;
+                    document.querySelector('#SecondPlace').innerHTML = `${finished[1]}: ${crossFin[1]} ${finTime[1]}`;
+                    document.querySelector('#ThirdPlace').innerHTML = `${finished[2]}: ${crossFin[2]} ${finTime[2]}`;
+                    document.querySelector('#FourthPlace').innerHTML = `${finished[3]}: ${crossFin[3]} ${finTime[3]}`;
                 } else {
                     for (let j = 1; finished.length !== crossFin.length; j++) {
                         if (finTime[crossFin.length - 1] !== finTime[crossFin.length - j - 2]) {
@@ -207,7 +221,6 @@ function checkAllDone() {
     for (let i = 0; i < horses.length; i++) {
         if (allDone.includes(horses[i].color) === false && horses[i].position.x + horses[i].width > canvas.width - 1) {
             allDone.push(horses[i].color);
-            //console.log(allDone.length)
         }
     }
 }
@@ -240,12 +253,12 @@ function restart() {
 //Defines keys. R: start race; T: reset race
 window.addEventListener('keydown', (event) => {
     if (event.key === 'r' && raceRunning === false) {
+        posBox();      
         race();
         increaseTimer();
     } else if (event.key === 't' && crossFin.length === horses.length) {
+        startTime = '';
         genHorses()
         restart()
-        console.log(raceRunning)
     }
-    //console.log(event.key)
 })

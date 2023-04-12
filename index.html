@@ -4,7 +4,10 @@
             box-sizing: border-box; display: flex; width: 100%; align-items: center; justify-content: center; height: 35px; 
         }
         .currentPos {
-            position: relative; background-color: black; height: 50; width: 22;
+            position: relative; background-color: yellow; height: 22; width: 40;
+        }
+        .testDiv {
+            height: 100; width: 100; background-color: black;
         }
     </style>
 </head>
@@ -14,7 +17,7 @@
 
 
     <!-- Position Bar and Timer-->
-    <div style="position: relative; box-sizing: border-box; display: inline-block;">
+    <div id="posBar" style="position: relative; box-sizing: border-box; display: inline-block;">
         <div class="posBar" style="position: absolute; background-color: black; height: 70; bottom: 0; padding: 10px;">
             <!-- 1st Place -->
             <div id="FirstPlace" class="posBar" style="background-color: gold;">1st:</div>
