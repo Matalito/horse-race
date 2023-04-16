@@ -1,44 +1,8 @@
 <head>
-    <style>
-        .posBar {
-            box-sizing: border-box; 
-            display: flex; 
-            width: 100%; 
-            align-items: center; 
-            justify-content: center; 
-            height: 35px; 
-        }
-        .currentPos {
-            position: absolute; 
-            z-index: 1; 
-            background-color: yellow; 
-            width: 30px;
-            height: 22px;
-        }
-    </style>
+   
 </head>
 
 <body>
-    <div id="field" style=" width: 1280px; height: 720px;">
-        
-    <!-- Position Bar and Timer-->
-    <div id="posBar" style="position: relative; box-sizing: border-box; display: inline-block;">
-        <div class="posBar" style="position: absolute; background-color: black; height: 70px; top: 650px; padding: 10px;">
-            <!-- 1st Place -->
-            <div id="FirstPlace" class="posBar" style="background-color: gold;">1st:</div>
-            <!-- 2nd Place -->
-            <div id="SecondPlace" class="posBar" style="background-color: silver;">2nd:</div>
-
-            <!-- timer -->
-            <div id="timer" class="posBar" style="background-color: red; height: 50px; width: 100px; flex-shrink: 0;">0.00</div>
-            
-            <!-- 3rd Place -->
-            <div id="ThirdPlace" class="posBar" style="background-color: brown;">3rd:</div>
-            <!-- 4th Place -->
-            <div id="FourthPlace" class="posBar" style="background-color: darkcyan;">4th:</div>
-        </div>
-        <canvas id="canvas" width="1280" height="720"></canvas>
-    </div>
-</div>
+    <canvas id="canvas"></canvas>
     <script src="index.js"></script>
 </body>
